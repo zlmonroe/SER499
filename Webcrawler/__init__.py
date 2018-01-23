@@ -8,4 +8,4 @@ __maintainer__ = "Zachary L. Monroe, Ajay Bansal"
 __email__ = "zlmonroe@asu.edu, Ajay.Bansal@asu.edu"
 """
 
-__all__ = ["AbstractSearchExample", "EmptyDictionary", "DFS.py", "IDDFS.py", "BFS.py", "WebNavigator"]
+__all__ = ["AbstractSearchExample", "EmptyDictionary", "WebNavigator"]

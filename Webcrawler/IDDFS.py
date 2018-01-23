@@ -18,7 +18,7 @@ class IDDFS(AbstractSearchExample.AbstractSearch):
 
                 if state not in visited:
                     visited.add(state)
-                    if end == state:
+                    if goal == state:
                         return path
                     for newState in WebNavigator.WebNavigator.getAbsoluteLinksFromPage(state):
                         self.fringe.push((newState, [newState] + path))

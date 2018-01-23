@@ -9,68 +9,40 @@ class BFS(AbstractSearchExample.AbstractSearch):
         super().__init__(fringe)
 
     def search(self, root, goal, maxDepth=0):
-        visited = []
-        queue = Queue()
-        queue.put((start, None))
-
-        while not queue.empty():
-            vertex, parent = queue.get()
-
-            if vertex not in visited:
-                visited.append((vertex, parent))
-                if vertex == end:
-                    return visited, queue
-
-                links = WebNavigator.WebNavigator.getAbsoluteLinksFromPage(vertex)
-                for link in links:
-                    queue.put((link, vertex))
-        return visited
-
-    def getPath(self, start):
-        pass
-
-    def depthSearch(self, start, maxDepth=-1):
-        """
-
-        :param start: The node for the search to begin at (in our case this is a URL)
-        :param maxDepth: The (non-inclusive) depth for the search to end at. 0 is treated as the start node, and every
-        node from there is 1, and so on. The default behavior should be unrestricted bfs when maxDepth < 0.
-        :return: A dictionary of {depths: URLS} visited by the search
-        :rtype EmptyDictionary
-        """
         currentDepth = 0
-
         visited = EmptyDictionary.EmptyDictionary()
-        queue = self.fringe
-        queue.put(start)
-        queue.put(None)
+        self.fringe.put((root, None))
+        self.fringe.put(None)
         vertex = None
         count = 0
 
-        while not queue.empty():
+        while not self.fringe.empty():
             if currentDepth == maxDepth:
                 return visited
 
-            lastVertex, vertex = vertex, queue.get()
-            if not vertex:
+            lastVertex, edge = vertex, self.fringe.get()
+            if not edge:
                 if not lastVertex:
                     return visited
                 currentDepth += 1
-                queue.put(None)
+                self.fringe.put(None)
 
-            elif vertex not in visited:
-                count += 1
-                if count % 10 == 0:
-                    print("Depth:", currentDepth, "Count:", count, "Unexplored:", queue.qsize())
-                visited[currentDepth].add(vertex)
-
-                links = WebNavigator.WebNavigator.getAbsoluteLinksFromPage(vertex)
-                for link in links:
-                    queue.put(link)
+            else:
+                vertex, parent = edge
+                if vertex not in visited:
+                    visited[currentDepth].add((vertex, parent))
+                    if vertex == goal:
+                        return visited
+                    print("Count:",count,"Depth:",currentDepth,"Visited:", [("%d:"%layer,len(visited[layer])) for layer in visited.keys()])
+                    count += 1
+                    links = WebNavigator.WebNavigator.getAbsoluteLinksFromPage(vertex)
+                    if goal in links:
+                        print("GOAL IN FRINGE")
+                    for link in links:
+                        self.fringe.put((link, vertex))
         return visited
 
 
 if __name__ == "__main__":
     bfs = BFS(Queue())
-    # print("Point Search:", bfs.pointSearch("https://www.google.com/", "https://www.google.com/services/"))
-    print("Depth Search:",bfs.depthSearch("https://www.google.com/", 3))
+    print("Depth Search:", bfs.search("https://www.google.com/", "https://plus.google.com/+google/posts/abBGhYQa4dK", 3))
