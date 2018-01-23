@@ -1,4 +1,4 @@
-import Webcrawler.AbstractSearchExample as ASE
+from Webcrawler import *
 from queue import PriorityQueue
 
 
