@@ -13,7 +13,7 @@ class AbstractSearch(ABC):
         self.fringe = fringe
 
     @abstractmethod
-    def search(self, root, goal, maxDepth):
+    def search(self, root, goal, maxDepth=0):
         """
         Defines point to point, depth limited search
 
