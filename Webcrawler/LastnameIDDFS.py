@@ -8,16 +8,10 @@ class LastnameDFS(ASE.AbstractSearch):
     def __init__(self, fringe):
         super().__init__(fringe)
 
-    def pointSearch(self, start, end):
+    def search(self, root, goal):
         print("pointSearch")
         raise NotImplementedError
 
-    def depthSearch(self, start, depth=0):
-        print("depthSearch")
-        raise NotImplementedError
-
-
 if __name__ == "__main__":
     iddfs = LastnameDFS(LifoQueue)
-    iddfs.pointSearch("www.google.com", "www.bing.com")
-    iddfs.depthSearch("www.google.com")
+    iddfs.search("www.google.com", "www.bing.com")

@@ -8,16 +8,15 @@ class LastnameDFS(ASE.AbstractSearch):
     def __init__(self, fringe):
         super().__init__(fringe)
 
-    def pointSearch(self, start, end):
-        print("pointSearch")
-        raise NotImplementedError
-
-    def depthSearch(self, start, depth=0):
-        print("depthSearch")
-        raise NotImplementedError
+    def search(self, root, goal):
+        # While BFS isn't exactly the first choice for implementing a webcrawler,
+        # DFS is almost never used. What advantages does BFS have over DFS? Why
+        # would DFS be impractical?
+        print("""
+        Students Response:
+        """)
 
 
 if __name__ == "__main__":
     dfs = LastnameDFS(LifoQueue)
-    dfs.pointSearch("www.google.com", "www.bing.com")
-    dfs.depthSearch("www.google.com")
+    dfs.search("", "")

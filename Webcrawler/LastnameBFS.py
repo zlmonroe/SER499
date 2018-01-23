@@ -8,16 +8,10 @@ class LastnameDFS(ASE.AbstractSearch):
     def __init__(self, fringe):
         super().__init__(fringe)
 
-    def pointSearch(self, start, end):
+    def search(self, root, goal, maxDepth):
         print("pointSearch")
         raise NotImplementedError
 
-    def depthSearch(self, start, depth=0):
-        print("depthSearch")
-        raise NotImplementedError
-
-
 if __name__ == "__main__":
     bfs = LastnameDFS(Queue)
-    bfs.pointSearch("www.google.com", "www.bing.com")
-    bfs.depthSearch("www.google.com")
+    bfs.search("https://www.google.com/", "https://store.google.com/category/phones")

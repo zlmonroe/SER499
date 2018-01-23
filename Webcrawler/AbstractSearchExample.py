@@ -13,18 +13,13 @@ class AbstractSearch(ABC):
         self.fringe = fringe
 
     @abstractmethod
-    def pointSearch(self, start, end):
+    def search(self, root, goal, maxDepth):
         """
-        Defines the path search method (i.e. point to point)
+        Defines point to point, depth limited search
 
-        :param start: Starting node"""
-        pass
-
-    @abstractmethod
-    def depthSearch(self, start, depth=0):
-        """
-        Defines the depth search method (search for websites but give up at a certain depth). Default
-        is depth = 0 which will not end at any depth.
+        :param maxDepth: the depth the search should end at
+        :param goal: the target of the search
+        :param root: Starting node of the search
         """
         pass
 
