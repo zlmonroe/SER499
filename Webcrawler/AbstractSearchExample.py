@@ -10,7 +10,7 @@ class AbstractSearch(ABC):
         :type fringe: Queue, PriorityQueue, LifoQueue
         """
         super().__init__()
-        self.fringe = fringe
+        self.fringe = fringe()
 
     @abstractmethod
     def search(self, root, goal, maxDepth=0):

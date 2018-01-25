@@ -1,5 +1,6 @@
 from Webcrawler import *
 from queue import Queue
+import json
 
 
 class BFS(AbstractSearchExample.AbstractSearch):
@@ -9,8 +10,12 @@ class BFS(AbstractSearchExample.AbstractSearch):
         super().__init__(fringe)
 
     def search(self, root, goal, maxDepth=0):
+        """
+        This method should be an ITERATIVE definition of BFS.
+        You will receive no points for a recursive implementation.
+        """
         currentDepth = 0
-        visited = EmptyDictionary.EmptyDictionary()
+        visited = EmptyDictionary.EmptyDictionary(dict)
         self.fringe.put((root, None))
         self.fringe.put(None)
         vertex = None
@@ -30,10 +35,10 @@ class BFS(AbstractSearchExample.AbstractSearch):
             else:
                 vertex, parent = edge
                 if vertex not in visited:
-                    visited[currentDepth].add((vertex, parent))
+                    visited[vertex] = {"parent":parent, "depth":currentDepth, "count":count}
                     if vertex == goal:
                         return visited
-                    print("Count:",count,"Depth:",currentDepth,"Visited:", [("%d:"%layer,len(visited[layer])) for layer in visited.keys()])
+                    print("Count:",count,"Depth:",currentDepth,"Visited:",vertex)
                     count += 1
                     links = WebNavigator.WebNavigator.getAbsoluteLinksFromPage(vertex)
                     if goal in links:
@@ -45,4 +50,6 @@ class BFS(AbstractSearchExample.AbstractSearch):
 
 if __name__ == "__main__":
     bfs = BFS(Queue())
-    print("Depth Search:", bfs.search("https://www.google.com/", "https://plus.google.com/+google/posts/abBGhYQa4dK", 3))
+    with open("dfsSearch.txt", "w+") as file:
+        print("Depth Search:", json.dumps(bfs.search("https://www.google.com/", "https://drive.google.com/?tab=wo", 3), indent=1), file=file)
+        # "https://plus.google.com/+google/posts/abBGhYQa4dK"

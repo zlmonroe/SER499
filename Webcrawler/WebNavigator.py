@@ -15,17 +15,44 @@ class WebNavigator(object):
         :return: page content
         :rtype: str
         """
-        page_source = ""
+        pageSource = ""
         try:
             response = urllib.request.urlopen(link)
             try:
-                page_source = response.read().decode(response.headers.get_content_charset())
+                pageSource = response.read().decode(response.headers.get_content_charset())
             except (TypeError, UnicodeDecodeError):
                 pass
         except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError):
             pass
 
-        return page_source
+        return pageSource
+
+    @staticmethod
+    def getVisibleTextContent(link):
+        """
+        Retrieves only the visible text from a link (no tags, etc.)
+
+        :param link: An absolute URL
+        :return: list of visible text
+        :rtype list of str
+        """
+        def visible(element):
+            if element.parent.name in ['style', 'script', '[document]', 'head', 'title']:
+                return False
+            elif re.match('<!--.*-->', str(element.encode('utf-8'))):
+                return False
+            return True
+
+        try:
+            response = urllib.request.urlopen(link)
+            data = BeautifulSoup(response, 'lxml').findAll(text=True)
+
+            visibleSource = list(filter(visible, data))
+            return visibleSource
+
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError):
+            return ""
+
 
     @staticmethod
     def getLinks(content):
