@@ -44,9 +44,11 @@ class Heuristic(AbstractSearchExample.AbstractSearch):
             return wordList
 
         content = set(wordSplit(WebNavigator.WebNavigator.getVisibleTextContent(link)))
-        goalContent = set(wordSplit(WebNavigator.WebNavigator.getVisibleTextContent(goal)))
-        matches = content.intersection(goalContent)
-        print(len(matches), link, content, goalContent, end='\n')
+        if self.goal != goal:
+            self.goalContent = set(wordSplit(WebNavigator.WebNavigator.getVisibleTextContent(goal)))
+            self.goal = goal
+        matches = content.intersection(self.goalContent)
+        print(len(matches), link, content, self.goalContent, end='\n')
         return len(matches)
 
 
